@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<div class="wrapper">
+<div class="container my-3">
+    <h1>강화</h1>
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>아이템</th>
+            <th>획득일시</th>
+            <th>판매</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if itemlist %}
+            {% for item in itemlist %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'user:detail' item.id %}">{{ item.name }}</a>
+            </td>
+            <td>{{ item.create_date }}</td>
+            <td>
+                <button
+                    type="button" class="btn btn-primary"
+                    onclick="location.href='{% url 'user:reinforce_item' item.id %}'">강화
+                </button>
+            </td>
+        </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">아이템이 없습니다.</td>
+        </tr>
+
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

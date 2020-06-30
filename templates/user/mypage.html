@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <div class="wrapper my-3">
+
+<div class="container my-3">
+
+    <div class="card my-3">
+    <h2 class="border-bottom py-2">유저 정보</h2>
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">
+                닉네임: {{ person.username }}
+                <p></p>
+                보유 금액: {{ person.userstatus.money }} 원
+                <p></p>
+                레벨: {{ person.userstatus.level }}
+                <p></p>
+                {% if equipped_item %}
+                주무기:{{ equipped_item.item }} 장착중
+                {% else %}
+                주무기: 없음
+                {% endif %}
+                <p></p>
+                데미지:{{ person.userstatus.damage }}
+            </div>
+            <p></p>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+<div class="card my-2">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>아이템</th>
+            <th>획득일시</th>
+            <th>장착</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if itemlist %}
+            {% for item in itemlist %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'user:detail' item.id %}">{{ item.name }}</a>
+            </td>
+            <td>{{ item.create_date }}</td>
+            <td>
+                <button
+                    type="button" class="btn btn-primary"
+                    onclick="location.href='{% url 'user:equip' user.username item.id %}'">장착
+                </button>
+            </td>
+        </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">아이템이 없습니다.</td>
+        </tr>
+
+        {% endif %}
+
+        </tbody>
+    </table>
+    </div>
+
+</div>
+    </div>
+
+{% endblock %}

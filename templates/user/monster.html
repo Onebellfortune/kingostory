@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+<div class="container my-3">
+    <h1>몬스터</h1>
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>이름</th>
+            <th>보유아이템</th>
+            <th>hp</th>
+            <th>생성시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if monster_list %}
+        {% for monsterlist in monster_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                {{ monsterlist.name }}
+            </td>
+            <td>{{ monsterlist.itemid }}</td>
+            <td>{{ monsterlist.hp }}</td>
+            <td>{{ monsterlist.create_date }}</td>
+            <td>
+                <button
+                    type="button" class="btn btn-primary"
+                    onclick="location.href='{% url 'user:catch_monster' monsterlist.id user.username %}'">잡기
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">몬스터가 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
